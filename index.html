@@ -2,40 +2,43 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Login - Web Estrella</title>
-  <style>
-    body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #ff4500; color: white; font-family: Arial; }
-    form { background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; text-align: center; }
-    input, button { margin: 8px; padding: 10px; border: none; border-radius: 5px; }
-    button { background: #ff6600; color: white; cursor: pointer; }
-  </style>
+  <title>Web principal</title>
 </head>
 <body>
-  <form id="loginForm">
-    <h2>Iniciar sesión</h2>
-    <input type="text" id="username" placeholder="Usuario" required>
-    <input type="password" id="password" placeholder="Contraseña" required>
-    <button type="submit">Entrar</button>
-    <p id="error"></p>
-  </form>
+  <h1>Bienvenido</h1>
+  <p>Edita esta página a tu gusto.</p>
+
+  <h3>Panel admin</h3>
+  <input id="adminPass" type="password" placeholder="Contraseña admin">
+  <input id="newUser" placeholder="Nuevo usuario">
+  <input id="newPass" placeholder="Contraseña">
+  <button onclick="crear()">Crear usuario</button>
+  <button onclick="borrar()">Borrar usuario</button>
+  <p id="msg"></p>
 
   <script>
-    document.getElementById("loginForm").addEventListener("submit", async e => {
-      e.preventDefault();
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-
-      const res = await fetch("/.netlify/functions/login", {
+    async function crear() {
+      const res = await fetch("/.netlify/functions/createUser", {
         method: "POST",
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({
+          adminPass: document.getElementById("adminPass").value,
+          username: document.getElementById("newUser").value,
+          password: document.getElementById("newPass").value
+        })
       });
+      document.getElementById("msg").textContent = await res.text();
+    }
 
-      if (res.ok) {
-        window.location.href = "web.html";
-      } else {
-        document.getElementById("error").textContent = "Usuario o contraseña incorrectos.";
-      }
-    });
+    async function borrar() {
+      const res = await fetch("/.netlify/functions/deleteUser", {
+        method: "POST",
+        body: JSON.stringify({
+          adminPass: document.getElementById("adminPass").value,
+          username: document.getElementById("newUser").value
+        })
+      });
+      document.getElementById("msg").textContent = await res.text();
+    }
   </script>
 </body>
 </html>
