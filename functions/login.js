@@ -1,18 +1,20 @@
-import fs from "fs";
+function login() {
+    const user = document.getElementById('username').value.trim();
+    const pass = document.getElementById('password').value.trim();
+    const msg = document.getElementById('message');
 
-export async function handler(event) {
-  const { username, password } = JSON.parse(event.body);
-  const users = JSON.parse(fs.readFileSync("users.json", "utf8"));
+    // Usuario y contraseña correctos
+    const correctUser = "admin";
+    const correctPass = "ADVIKakulaIESLAESTRELLA";
 
-  if (users[username] && users[username] === password) {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ success: true })
-    };
-  } else {
-    return {
-      statusCode: 401,
-      body: JSON.stringify({ success: false, message: "Credenciales inválidas" })
-    };
-  }
+    if (user.toLowerCase() === correctUser.toLowerCase() && pass === correctPass) {
+        msg.style.color = "green";
+        msg.textContent = "Acceso concedido, redirigiendo...";
+        setTimeout(() => {
+            window.location.href = "web.html";
+        }, 800);
+    } else {
+        msg.style.color = "red";
+        msg.textContent = "Usuario o contraseña incorrectos.";
+    }
 }
