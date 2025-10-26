@@ -7,38 +7,6 @@
 <body>
   <h1>Bienvenido</h1>
   <p>Edita esta página a tu gusto.</p>
-
-  <h3>Panel admin</h3>
-  <input id="adminPass" type="password" placeholder="Contraseña admin">
-  <input id="newUser" placeholder="Nuevo usuario">
-  <input id="newPass" placeholder="Contraseña">
-  <button onclick="crear()">Crear usuario</button>
-  <button onclick="borrar()">Borrar usuario</button>
-  <p id="msg"></p>
-
-  <script>
-    async function crear() {
-      const res = await fetch("/.netlify/functions/createUser", {
-        method: "POST",
-        body: JSON.stringify({
-          adminPass: document.getElementById("adminPass").value,
-          username: document.getElementById("newUser").value,
-          password: document.getElementById("newPass").value
-        })
-      });
-      document.getElementById("msg").textContent = await res.text();
-    }
-
-    async function borrar() {
-      const res = await fetch("/.netlify/functions/deleteUser", {
-        method: "POST",
-        body: JSON.stringify({
-          adminPass: document.getElementById("adminPass").value,
-          username: document.getElementById("newUser").value
-        })
-      });
-      document.getElementById("msg").textContent = await res.text();
-    }
-  </script>
 </body>
 </html>
+
