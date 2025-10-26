@@ -2,43 +2,85 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Web principal</title>
-</head>
-<body>
-  <h1>Bienvenido</h1>
-  <p>Edita esta página a tu gusto.</p>
-
-  <h3>Panel admin</h3>
-  <input id="adminPass" type="password" placeholder="Contraseña admin">
-  <input id="newUser" placeholder="Nuevo usuario">
-  <input id="newPass" placeholder="Contraseña">
-  <button onclick="crear()">Crear usuario</button>
-  <button onclick="borrar()">Borrar usuario</button>
-  <p id="msg"></p>
-
-  <script>
-    async function crear() {
-      const res = await fetch("/.netlify/functions/createUser", {
-        method: "POST",
-        body: JSON.stringify({
-          adminPass: document.getElementById("adminPass").value,
-          username: document.getElementById("newUser").value,
-          password: document.getElementById("newPass").value
-        })
-      });
-      document.getElementById("msg").textContent = await res.text();
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso con código</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #ff6a00, #ff0000);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
     }
 
-    async function borrar() {
-      const res = await fetch("/.netlify/functions/deleteUser", {
-        method: "POST",
-        body: JSON.stringify({
-          adminPass: document.getElementById("adminPass").value,
-          username: document.getElementById("newUser").value
-        })
-      });
-      document.getElementById("msg").textContent = await res.text();
+    .login-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .login-container input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .login-container button {
+      background-color: #ff4b2b;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .login-container button:hover {
+      background-color: #ff1a1a;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Introduce tu código</h2>
+    <input type="text" id="code" placeholder="Código de acceso">
+    <button onclick="verifyCode()">Entrar</button>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    async function verifyCode() {
+      const code = document.getElementById('code').value.trim();
+      const msg = document.getElementById('message');
+
+      try {
+        const response = await fetch('users.json');
+        const data = await response.json();
+
+        if (data.users.includes(code)) {
+          msg.style.color = 'green';
+          msg.textContent = 'Código válido, redirigiendo...';
+          setTimeout(() => {
+            window.location.href = 'web.html';
+          }, 800);
+        } else {
+          msg.style.color = 'red';
+          msg.textContent = 'Código incorrecto o inexistente.';
+        }
+      } catch (error) {
+        msg.style.color = 'red';
+        msg.textContent = 'Error al leer el archivo users.json';
+        console.error('Error al cargar users.json:', error);
+      }
     }
   </script>
 </body>
 </html>
+
