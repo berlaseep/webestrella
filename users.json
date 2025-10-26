@@ -1,3 +1,7 @@
 {
-  "admin": "ADVIKakulaIESLAESTRELLA"
+  "users": [
+    "ADVIKakulaIESLAESTRELLA",
+    "12345",
+    "codigoTest"
+  ]
 }
