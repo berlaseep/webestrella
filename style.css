@@ -1,0 +1,114 @@
+/* --- General --- */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: white;
+}
+
+/* --- Barra de navegación --- */
+.navbar {
+  display: flex;
+  justify-content: center;
+  border-bottom: 2px solid #ccc;
+  padding: 10px 0;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 80px;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar li {
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+}
+
+.navbar li.active {
+  color: black;
+}
+
+.navbar li.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-color: blue;
+}
+
+/* --- Contenedor principal --- */
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+/* --- Columna izquierda --- */
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  text-align: center;
+}
+
+.practice h3 {
+  margin-bottom: 10px;
+}
+
+.practice button {
+  border: 2px solid #500000;
+  color: black;
+  background: transparent;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.practice button:hover {
+  background-color: #500000;
+  color: white;
+}
+
+/* --- Columna derecha --- */
+.right-column {
+  text-align: center;
+}
+
+.right-column h2 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.tutorial-box {
+  border: 3px solid #00aaff;
+  padding: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  min-height: 150px;
+}
+
+.blue-text {
+  color: #0099ff;
+  font-weight: bold;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar ul {
+    gap: 30px;
+  }
+}
